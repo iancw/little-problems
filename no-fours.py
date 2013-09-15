@@ -20,11 +20,20 @@ def brute(n):
     print "There are %d numbers less than %d that do not contain the digit 4" % (count, n)
     print "There are %d numbers less than %d that do contain the digit 4" % (n-count, n)
 
-# works for one digits
+# works for two digits
 def fast(n):
-    if n > 4:
-        return 1
-    return 0
+    ex = 0
+    if n > 49:
+        ex = 10
+    if n > 39 and n < 50:
+        ex = n-40
+    if n > 44:
+        ex = ex -1
+    r = n - 10 * (n/10)
+    rp = 0
+    if r > 4:
+        rp = 1
+    return n/10 + rp + ex
     
 n=int(sys.argv[1])
 
