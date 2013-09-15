@@ -22,15 +22,14 @@ def brute(n):
 
 def fast(n):
     d = int(log10(n))
-    print "%d" % (d*n/10)
-    c = 0
-    for i in range(0, d):
-        tp = int(pow(10, i))
-        cp = tp * n/(tp*10)
-        print "i=%d, tp=%d, cp=%d" % (i, tp, cp)
-        c = c + cp
-    print "Counted %d fours below %d" % (c, n)
-
+    s = 0
+    if d == 1:
+        s = 1
+    if d > 1:
+        s = 2 * int(pow(10, d-1))
+    print "dn/10=%d, s=%d" % (d*n/10, s)
+    print "%d" % (d*n/10 - s)
+    
 n=int(sys.argv[1])
 
 fast(n)
@@ -55,3 +54,21 @@ brute(n)
 # but this simplifies to ...
 # n/10 + n/10 + n/10 ... 
 # or d * n/10
+# so how about for overlaps ... 
+# with one digit there are no overlaps
+# with two digits, there is one overlap (44)
+# with three digits, there are 10 overlaps (44, 144, 244, ... 944) 
+# plus 10 more overlaps (404, 414, 424, ... 494) minus the intersection?
+# but its also a "double overlap" aka 444
+# with four digits, there are 4004, 4014, 4024, ... or all the overlaps with three digits
+# times 10 (so 100 overlaps) plus ... all the overlaps not counted previously caused by the 4000's...
+# so 4004, 4014, 4024, 4034, ... there's one of these for every group of 10, so 1000 / 10 = 100
+# in summary...
+# with three digits, there are 100 overlaps + 100 overlaps
+# 
+# one digit, 0 
+# two digits, 1 (10^0)
+# three digits, 10 + 10  (2 * 10^1)
+# four digits, 100 + 100 ( 2 * 10^2)
+
+
