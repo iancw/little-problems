@@ -22,18 +22,21 @@ def brute(n):
 
 # works for two digits
 def fast(n):
+    p = int(log10(n))
+    tp = int(pow(10, p))
+    print "p=%d, tp=%d" % (p, tp)
     ex = 0
-    if n > 49:
-        ex = 10
-    if n > 39 and n < 50:
-        ex = n-40
-    if n > 44:
+    if n > (4+1) * tp:
+        ex = tp
+    elif n > (4-1)*tp:
+        ex = n-4*tp
+    if n > 4*(tp+1):
         ex = ex -1
-    r = n - 10 * (n/10)
+    r = n - tp * (n/tp)
     rp = 0
     if r > 4:
         rp = 1
-    return n/10 + rp + ex
+    return n/tp + rp + ex
     
 n=int(sys.argv[1])
 
