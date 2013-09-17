@@ -12,6 +12,7 @@ def brute(n):
             #digit = temp - 10 * (temp/10) # digit is the remainder ...
             digit = temp % 10
             if digit == 4:
+#                print "%d has a 4 in it" % i
                 nofours = False
                 break
             temp = temp/10
@@ -20,28 +21,27 @@ def brute(n):
     print "There are %d numbers less than %d that do not contain the digit 4" % (count, n)
     print "There are %d numbers less than %d that do contain the digit 4" % (n-count, n)
 
+# 19*10 + (100 - 19)
+
 # works for two digits
 def fast(n):
     p = int(log10(n))
-    tp = int(pow(10, p))
-    print "p=%d, tp=%d" % (p, tp)
-    ex = 0
-    if n > (4+1) * tp:
-        ex = tp
-    elif n > (4-1)*tp:
-        ex = n-4*tp
-    if n > 4*(tp+1):
-        ex = ex -1
-    r = n - tp * (n/tp)
-    rp = 0
-    if r > 4:
-        rp = 1
-    return n/tp + rp + ex
-    
+    c = 0
+    for i in range(0, p):
+        c = 10 * c +  int(pow(10, i)) - c
+    # now count just the digits between n and 10^(p-1)
+    toadd = n / int(pow(10, p))
+    extra_c = 0
+    if toadd >= 4:
+        extra_c = int(pow(10,p)) - c
+    print "c= %d, toadd=%d, extra_c=%d" % (c, toadd, extra_c)
+    c = c * toadd + extra_c
+    return c
+
 n=int(sys.argv[1])
 
-print "Fast: %d number containing 4's under %d" % (fast(n), n)
 brute(n)
+print "Fast: %d number containing 4's under %d" % (fast(n), n)
 # Okay, we're going to get this!!!!!
 # So for the one's there is ... 
 # 1 '4' with one digit
