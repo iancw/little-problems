@@ -18,30 +18,50 @@ def brute(n):
             temp = temp/10
         if nofours:
             count = count+1
-    print "There are %d numbers less than %d that do not contain the digit 4" % (count, n)
-    print "There are %d numbers less than %d that do contain the digit 4" % (n-count, n)
-
-# 19*10 + (100 - 19)
+    #print "There are %d numbers less than %d that do not contain the digit 4" % (count, n)
+    #print "There are %d numbers less than %d that do contain the digit 4" % (n-count, n)
+    return n-count
 
 # works for two digits
 def fast(n):
+    print "called fast(%d)" % n
+    if n == 0:
+        return 0
     p = int(log10(n))
     c = 0
+    # loop through each digit in the number (except the most significant)..
     for i in range(0, p):
+        # 1 4 in digit 0
+        # 19 4's in digit 1
+        # 176 4's in digit 2 ... 
         c = 10 * c +  int(pow(10, i)) - c
     # now count just the digits between n and 10^(p-1)
-    toadd = n / int(pow(10, p))
+    omag = int(pow(10, p))
+    toadd = n - omag
+    # So for like 14 .... we'd have a residual of 4
+    # Also for like 44, we have a residual of 34 ... 
+    resid = (toadd / omag) * c
+    print "adding %d for residuals"  % resid
+    print "toadd = %d, threshold = %d" % (toadd, 4*omag)
     extra_c = 0
-    if toadd >= 4:
-        extra_c = int(pow(10,p)) - c
+    if toadd >= (4 * omag):
+        # The goal of this section is to add in all the fours from this 
+        # order of magnitude
+        # e.g. for number 4xx, we need to count one for every number
+        # greater than 400 less than 500
+        # for number 4x, we need to count one for every number over 40
+        # and less than 50
+        morefours = toadd - 3*omag
+        print "We're in morefours %d (max would be %d)" % (morefours, 4*omag)
+        extra_c = min(morefours, 4*omag)
     print "c= %d, toadd=%d, extra_c=%d" % (c, toadd, extra_c)
-    c = c * toadd + extra_c
-    return c
+    #c = c * toadd + extra_c
+    return c + resid + extra_c + fast(toadd % omag)
 
-n=int(sys.argv[1])
-
-brute(n)
-print "Fast: %d number containing 4's under %d" % (fast(n), n)
+if __name__ == '__main__':
+    n=int(sys.argv[1])
+    print "There are %d numbers less than %d that do contain the digit 4" % (brute(n), n)
+    print "Fast: %d number containing 4's under %d" % (fast(n), n)
 # Okay, we're going to get this!!!!!
 # So for the one's there is ... 
 # 1 '4' with one digit
