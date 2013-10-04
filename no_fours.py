@@ -24,10 +24,10 @@ def brute(n):
 
 # works for two digits
 def fast(n):
-    print "called fast(%d)" % n
     if n == 0:
         return 0
     p = int(log10(n))
+    # c - counts the fours up to the order of magnitude
     c = 0
     # loop through each digit in the number (except the most significant)..
     for i in range(0, p):
@@ -36,27 +36,41 @@ def fast(n):
         # 176 4's in digit 2 ... 
         c = 10 * c +  int(pow(10, i)) - c
     # now count just the digits between n and 10^(p-1)
+    # omag, eg for 40 would be 10, for 400 would be 100
     omag = int(pow(10, p))
-    toadd = n - omag
     # So for like 14 .... we'd have a residual of 4
     # Also for like 44, we have a residual of 34 ... 
-    resid = (toadd / omag) * c
-    print "adding %d for residuals"  % resid
-    print "toadd = %d, threshold = %d" % (toadd, 4*omag)
+    omag_residual = n - omag
+    # multiple the count for each omag (e.g. if there are 19 4's below 100) 
+    # and n is 500, we count 5 * 19
+    resid_count = ((n-omag) / omag) * c
+    omag4 = 4 * omag
+    omag5 = 5 * omag
+    # count the extra fours 4's in e.g. the 4xx's for example
     extra_c = 0
-    if toadd >= (4 * omag):
+    if n >= omag4:
         # The goal of this section is to add in all the fours from this 
         # order of magnitude
         # e.g. for number 4xx, we need to count one for every number
         # greater than 400 less than 500
         # for number 4x, we need to count one for every number over 40
         # and less than 50
-        morefours = toadd - 3*omag
-        print "We're in morefours %d (max would be %d)" % (morefours, 4*omag)
-        extra_c = min(morefours, 4*omag)
-    print "c= %d, toadd=%d, extra_c=%d" % (c, toadd, extra_c)
-    #c = c * toadd + extra_c
-    return c + resid + extra_c + fast(toadd % omag)
+        morefours = n - omag4
+        extra_c = min(morefours, omag) # don't count more than omag 4's
+    # I'm not sure why this is necessary
+    # My theory is that really resid_count should have + 1 c, and adding
+    # c back in solves that, except when we add all the 4's above omag4
+    # that cancels out because we've double counted ...
+    # ...except why does it only kick in at omag5 and above?
+    # i guess because we subtract omag from n ... 
+    if n >= omag5:
+        c = 0
+    lesser_digits = 0
+    if n < omag4 or n >= omag5:
+        lesser_digits = fast(omag_residual % omag)
+#    print "n=%d, resid_count=%d, c=%d, extra_c=%d, lesser_digits=%d" % (n, resid_count, c, extra_c, lesser_digits)
+    result = resid_count + c + extra_c + lesser_digits
+    return result 
 
 if __name__ == '__main__':
     n=int(sys.argv[1])
