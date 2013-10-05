@@ -1,5 +1,5 @@
 # Sorts ar in place using quicksort algorithm
-def quicksort(ar):
+def heapsort(ar):
 	pass
 
 def merge(a, b):
