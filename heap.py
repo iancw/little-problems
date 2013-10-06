@@ -13,13 +13,50 @@ class heap:
 		return self.array[i]
 
 	def parent(self, i):
-		return i / 2
+		if i == 0:
+			return -1
+		return (i-1) / 2
 
 	def right_child(self, i):
 		return 2 * i + 2
 
 	def left_child(self, i):
 		return 2 * i + 1
+
+	def swap(self, i, j):
+		t = self.array[i]
+		self.array[i] = self.array[j]
+		self.array[j] = t
+
+	def extract_min(self):
+#		print "extracting..."
+		m = self.array[0]
+		self.swap(0, self.size - 1)
+		self.size -= 1
+		self.array[self.size] = -1
+		self.heapify_down(0)
+#		print "done"
+		return m
+
+	def heapify_up(self, node):
+#		print "heapify_up %s, %d" % (self.array, node)
+		if node == 0:
+			return
+		p = self.parent(node)
+		if self[node] < self[p]:
+			self.swap(node, p)
+			self.heapify_up(p)
+
+	def heapify_down(self, node):
+#		print "heapify_down %s, %d" % (self.array, node)
+		l = self.left_child(node)
+		r = self.right_child(node)
+		m = l
+		if r < self.size and self[r] < self[l]:
+			m = r
+		if m < self.size and self[m] < self[node]:
+			self.swap(m, node)
+			self.heapify_down(m)
 
 	def find(self, el):
 		i = 0
@@ -28,13 +65,17 @@ class heap:
 				return i
 				if el < self[i]:
 					i = self.left_child(i)
-				else el > self[i]:
+				else: # el > self[i]:
 					i = self.right_child(i)
 		return -1
 
 	# Insert element into heap
 	def insert(self, el):
-
+#		print "inserting %d" % el
+		self.array.append(el)
+		self.size += 1
+		self.heapify_up(self.size - 1)
+#		print "done"
 
 
 	
