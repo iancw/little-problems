@@ -1,6 +1,13 @@
+from heap import heap
 # Sorts ar in place using quicksort algorithm
 def heapsort(ar):
-	pass
+	h = heap()
+	for e in ar:
+		h.insert(e)
+	r = []
+	for i in range(0, len(ar)):
+		r.append(h.extract_min())
+	return r
 
 def merge(a, b):
 	out = []
@@ -29,3 +36,5 @@ def mergesort(ar):
 	b = mergesort(ar[m:])
 	return merge(a, b)
 
+def quicksort(ar):
+	
