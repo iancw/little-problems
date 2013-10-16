@@ -1,4 +1,5 @@
 from heap import heap
+import random
 # Sorts ar in place using quicksort algorithm
 def heapsort(ar):
 	h = heap()
@@ -48,6 +49,8 @@ def quicksort(ar):
 # Separates ar into those elements greater than
 # some randomly chosen pivot and those less than
 def partition(ar, l, h):
+	p = int(random.random() * (h-l))+l
+	swap(ar, p, h)
 	p = h
 	firsthigh = l
 	for i in range(l, h):
