@@ -36,5 +36,30 @@ def mergesort(ar):
 	b = mergesort(ar[m:])
 	return merge(a, b)
 
+def swap(ar, i, j):
+	t = ar[i]
+	ar[i] = ar[j]
+	ar[j] = t
+
 def quicksort(ar):
+	_quicksort(ar, 0, len(ar)-1)
+
+def partition(ar, l, h):
+	p = h
+	firsthigh = l
+	for i in range(l, h):
+		if ar[i] < ar[firsthigh]:
+			swap(ar, i, firsthigh)
+			firsthigh += 1
+	swap(ar, p, firsthigh)
+	return firsthigh
+
+
+
+def _quicksort(ar, l, h):
+	if h-1 > 0:
+		p = partition(ar, l, h)
+		_quicksort(ar, l, p-1)
+		_quicksort(ar, p+1, h)
+
 	

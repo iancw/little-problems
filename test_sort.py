@@ -1,11 +1,14 @@
 import unittest
 from no_fours import brute, fast
-from sort import heapsort, mergesort
+from sort import heapsort, mergesort, quicksort
 
 class TestSort(unittest.TestCase):
 
 	def test_heap(self):
 		self.help_sort(heapsort)
+
+	def test_quick(self):
+		self.help_sort(quicksort)
 
 	def test_merge(self):
 		self.help_sort(mergesort)
