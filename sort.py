@@ -43,23 +43,23 @@ def swap(ar, i, j):
 
 def quicksort(ar):
 	_quicksort(ar, 0, len(ar)-1)
+	return ar
 
+# Separates ar into those elements greater than
+# some randomly chosen pivot and those less than
 def partition(ar, l, h):
 	p = h
 	firsthigh = l
 	for i in range(l, h):
-		if ar[i] < ar[firsthigh]:
+		if ar[i] < ar[p]:
 			swap(ar, i, firsthigh)
 			firsthigh += 1
 	swap(ar, p, firsthigh)
 	return firsthigh
 
 
-
 def _quicksort(ar, l, h):
-	if h-1 > 0:
+	if h-l > 0 and l < h:
 		p = partition(ar, l, h)
 		_quicksort(ar, l, p-1)
 		_quicksort(ar, p+1, h)
-
-	
