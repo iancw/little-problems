@@ -1,5 +1,4 @@
 
-
 class heap:
 	"""
 	Python implemntation of minheap
@@ -8,6 +7,12 @@ class heap:
 	def __init__(self):
 		self.array = []
 		self.size = 0
+
+        def __init__(self, ar):
+                self.array = ar
+                self.size = 0
+                for i in range(0 len(ar)):
+                         self.insert(ar[i])
 
 	def __getitem__(self, i):
 		return self.array[i]
@@ -29,17 +34,14 @@ class heap:
 		self.array[j] = t
 
 	def extract_min(self):
-#		print "extracting..."
 		m = self.array[0]
 		self.swap(0, self.size - 1)
 		self.size -= 1
 		self.array[self.size] = -1
 		self.heapify_down(0)
-#		print "done"
 		return m
 
 	def heapify_up(self, node):
-#		print "heapify_up %s, %d" % (self.array, node)
 		if node == 0:
 			return
 		p = self.parent(node)
@@ -48,7 +50,6 @@ class heap:
 			self.heapify_up(p)
 
 	def heapify_down(self, node):
-#		print "heapify_down %s, %d" % (self.array, node)
 		l = self.left_child(node)
 		r = self.right_child(node)
 		m = l
@@ -71,11 +72,12 @@ class heap:
 
 	# Insert element into heap
 	def insert(self, el):
-#		print "inserting %d" % el
-		self.array.append(el)
+                if self.size == len(self.array):
+		         self.array.append(el)
+                else:
+                         self.array[self.size] = el
 		self.size += 1
 		self.heapify_up(self.size - 1)
-#		print "done"
 
 
 	
