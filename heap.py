@@ -4,15 +4,11 @@ class heap:
 	Python implemntation of minheap
 	"""
 
-	def __init__(self):
-		self.array = []
+	def __init__(self, ar=[]):
+		self.array = ar
 		self.size = 0
-
-        def __init__(self, ar):
-                self.array = ar
-                self.size = 0
-                for i in range(0 len(ar)):
-                         self.insert(ar[i])
+		for i in range(0, len(ar)):
+			self.insert(ar[i])
 
 	def __getitem__(self, i):
 		return self.array[i]
@@ -72,12 +68,15 @@ class heap:
 
 	# Insert element into heap
 	def insert(self, el):
-                if self.size == len(self.array):
-		         self.array.append(el)
-                else:
-                         self.array[self.size] = el
+		if self.size == len(self.array):
+			print "appending %d" % el
+			self.array.append(el)
+		else:
+			print "inserting %d" % el
+			self.array[self.size] = el
+		print "new array is %s" % self.array
+		self.heapify_up(self.size )
 		self.size += 1
-		self.heapify_up(self.size - 1)
 
 
 	
