@@ -2,6 +2,11 @@ from heap import heap
 import random
 # Sorts ar in place using quicksort algorithm
 def heapsort(ar):
+	h = heap(ar=ar)
+	h.unwind()
+	return ar
+
+def heapsort2(ar):
 	h = heap()
 	for e in ar:
 		h.insert(e)
