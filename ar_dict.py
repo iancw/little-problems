@@ -1,7 +1,7 @@
 
-class my_hash:
+class ar_dict:
 	"""
-	Python implemntation of hash map using unsorted arrays
+	Python implemntation of dictionary using unsorted arrays
 	"""
 
         def __init__(self):
