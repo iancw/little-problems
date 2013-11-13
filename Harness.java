@@ -1,15 +1,14 @@
+import java.util.HashMap;
 public class Harness
 {
   static boolean unique(String s){
+    HashMap<Character, Boolean> map = new HashMap<Character, Boolean>();
     for (int i=0; i<s.length(); i++){
-      for (int j=0; j<s.length(); j++){
-        if (i == j) {
-          continue;
-        }
-        if (s.charAt(i) == s.charAt(j)){
+      Boolean prior = map.get(s.charAt(i));
+      if (prior != null && prior){
           return false;
-        }
       }
+      map.put(s.charAt(i), Boolean.TRUE);
     }
     return true;
   }
