@@ -29,6 +29,11 @@ class TestHeap(unittest.TestCase):
     self.assertEquals(18, h.get('hash18'))
     self.assertEquals(16, h.get('hash16'))
 
+  def test_overflow(self):
+    h = my_hash(10)
+    for i in range(16, 26):
+      h.insert('hash%s' % i, i)
+
 if __name__ == '__main__':
   unittest.main()
 
